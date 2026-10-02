@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MGT102 Fundamentals of Management — Interactive Worksheets</title>
+<meta name="description" content="32 interactive worksheets for MGT102 Fundamentals of Management, COMSATS University Islamabad, Wah Campus.">
+<link rel="icon" href="assets/cui-logo.png">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px}
+.types .stat b{display:block;font-size:15px;margin-bottom:2px}
+.types .stat span{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="brandstrip"></div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="COMSATS University Islamabad, Wah Campus — MGT102 Worksheets home">
+    <img src="assets/cui-logo.png" alt="COMSATS University Islamabad logo" width="52" height="52">
+    <span class="b1">COMSATS University Islamabad, Wah Campus</span>
+  </a>
+  <div class="navlinks"><a class="btn" href="apps/L01.html">Start with Lecture 1 →</a></div>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">MGT102 Fundamentals of Management · BS(BA) / BS(BAF) · Semester 1</div>
+    <h1>Fundamentals of Management — Interactive Worksheets</h1>
+    <p class="lead">One interactive worksheet for each of the 32 lectures. Use them in class to demonstrate a concept, or assign them as practice. Everything runs in the browser — no login, no install, works on phones.</p>
+    <div class="tags"><span class="tag">16 weeks</span><span class="tag">32 worksheets</span><span class="tag">160 activities</span><span class="tag">CLO1–CLO5</span><span class="tag">Text: Robbins &amp; Coulter, Management</span></div>
+  </section>
+  <section class="card">
+    <h2>Every worksheet has five tabs</h2>
+    <div class="types">
+      <div class="stat"><b>1 · What-if calculator</b><span>Sliders that apply a fixed formula (e.g. break-even, span of control, expectancy). Change the inputs and watch the result.</span></div>
+      <div class="stat"><b>2 · Sorting exercise</b><span>Click items into the right category, or put steps in order, then check your answers.</span></div>
+      <div class="stat"><b>3 · Dilemma scenario</b><span>Make two linked decisions in a Pakistani workplace case and see how they move three scores.</span></div>
+      <div class="stat"><b>4 · Selector</b><span>Weight the criteria that matter and see which option — strategy, structure, style or tool — fits best.</span></div>
+      <div class="stat"><b>5 · Concept check</b><span>Five multiple-choice questions with instant feedback.</span></div>
+    </div>
+  </section>
+  <div class="card row" style="justify-content:space-between">
+    <input id="q" class="search" type="text" placeholder="Search worksheets (e.g. break-even, Fiedler, culture)…" aria-label="Search worksheets">
+    <span id="count" class="small muted"></span>
+  </div>
+  <div id="list"></div>
+  <p class="small muted datanote">Figures in these worksheets are simplified or illustrative for teaching; verify real-world data before using it in assignments.</p>
+</main>
+<footer><div class="wrap fbrand"><img src="assets/cui-logo.png" alt="" width="36" height="36"><span><b>Management Sciences Department.</b> Made by Abid Naeem.</span></div></footer>
+<script src="assets/lib.js"></script>
+<script>
+const {LECTURES,WEEKS,h,pad,clear,CLO}=Lab;
+const list=document.getElementById('list'), q=document.getElementById('q'), count=document.getElementById('count');
+function render(){
+  const term=q.value.trim().toLowerCase(); clear(list); let shown=0;
+  for(let w=1;w<=16;w++){
+    const items=LECTURES.filter(L=>L.w===w && (!term || (L.app+' '+L.topic+' '+L.desc+' '+L.ch).toLowerCase().includes(term)));
+    if(!items.length) continue; shown+=items.length;
+    list.append(h('div',{class:'weekhead'},`Week ${w} · ${WEEKS[w]}`),
+      h('div',{class:'weekgrid'}, items.map(L=>h('a',{class:'appcard',href:`apps/L${pad(L.n)}.html`},
+        h('div',{class:'n'},`LECTURE ${L.n}`), h('div',{class:'t'},L.app), h('div',{class:'d'},L.desc),
+        h('span',{class:'k'},L.ch), ' ', h('span',{class:'k'},CLO[L.n])))));
+  }
+  count.textContent=`${shown} of ${LECTURES.length} worksheets`;
+}
+q.addEventListener('input',render); render();
+</script>
+</body>
+</html>
